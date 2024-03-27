@@ -98,7 +98,7 @@ app.post('/api/signup', async (req, res) => {
         if (estimate > 0) {
             const existingUser = await User.findOne({ email });
             if (existingUser) {
-                return res.json({ success: true, message: 'User with this email already exists' });
+                return res.json({ success: false, message: 'User with this email already exists' });
             }
             const newUser = new User({ email, mName, password, type });
             await newUser.save();
