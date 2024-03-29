@@ -16,6 +16,7 @@
     "express": "^4.18.2",
     "flowbite": "^2.2.0",
     "flowbite-react": "^0.6.4",
+    "g-i-s": "^2.1.7",
     "html-to-image": "^1.11.11",
     "mongoose": "^8.0.2",
     "nodemailer": "^6.9.7",
