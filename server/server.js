@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer')
 const cors = require('cors');
 const crypto = require('crypto');
 require('dotenv').config();
+const gis = require('g-i-s');
 const youtubesearchapi = require("youtube-search-api");
 const { YoutubeTranscript } = require("youtube-transcript");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
