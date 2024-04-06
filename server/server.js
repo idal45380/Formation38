@@ -9,7 +9,7 @@ require('dotenv').config();
 const gis = require('g-i-s');
 const youtubesearchapi = require("youtube-search-api");
 const { YoutubeTranscript } = require("youtube-transcript");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } = require("@google/generative-ai");
 const { createApi } = require('unsplash-js');
 const showdown = require('showdown');
 const axios = require('axios');
@@ -260,9 +260,28 @@ app.post('/api/prompt', async (req, res) => {
 
     const promptString = receivedData.prompt;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const safetySettings = [
+        {
+            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+    ];
 
-    const prompt = promptString
+    const model = genAI.getGenerativeModel({ model: "gemini-pro", safetySettings });
+
+    const prompt = promptString;
 
     await model.generateContent(prompt).then(result => {
         const response = result.response;
@@ -279,7 +298,26 @@ app.post('/api/generate', async (req, res) => {
 
     const promptString = receivedData.prompt;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const safetySettings = [
+        {
+            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+        {
+            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        },
+    ];
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro", safetySettings });
 
     const prompt = promptString
 
